@@ -1,3 +1,6 @@
+Create a program to collect and store all the cards to assist the users in finding all the cards in a given symbol using Collection interface.
+
+
 import java.util.*;
 
 class Card {
