@@ -1,0 +1,36 @@
+import java.util.*;
+
+class Card {
+    String symbol, value;
+    Card(String symbol, String value) { this.symbol = symbol; this.value = value; }
+    public String toString() { return value + " of " + symbol; }
+}
+
+class CardCollection {
+    private Collection<Card> cards = new ArrayList<>();
+    void addCard(Card card) { cards.add(card); }
+    List<Card> findCardsBySymbol(String symbol) {
+        List<Card> result = new ArrayList<>();
+        for (Card card : cards) if (card.symbol.equalsIgnoreCase(symbol)) result.add(card);
+        return result;
+    }
+    void displayAllCards() { cards.forEach(System.out::println); }
+}
+
+public class CardManager {
+    public static void main(String[] args) {
+        CardCollection collection = new CardCollection();
+        collection.addCard(new Card("Hearts", "Ace"));
+        collection.addCard(new Card("Spades", "King"));
+        collection.addCard(new Card("Diamonds", "Queen"));
+        collection.addCard(new Card("Hearts", "10"));
+        collection.addCard(new Card("Clubs", "Jack"));
+        
+        System.out.println("All Cards:");
+        collection.displayAllCards();
+        
+        String searchSymbol = "Hearts";
+        System.out.println("\nCards with symbol " + searchSymbol + ":");
+        collection.findCardsBySymbol(searchSymbol).forEach(System.out::println);
+    }
+}
