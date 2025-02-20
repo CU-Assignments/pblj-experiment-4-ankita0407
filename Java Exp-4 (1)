@@ -1,0 +1,54 @@
+import java.util.*;
+
+class Employee {
+    int id; String name; double salary;
+    Employee(int id, String name, double salary) { this.id = id; this.name = name; this.salary = salary; }
+    public String toString() { return "ID: " + id + ", Name: " + name + ", Salary: " + salary; }
+}
+
+public class EmployeeManager {
+    private static final List<Employee> employees = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n1.Add 2.Update 3.Remove 4.Search 5.Display 6.Exit");
+            switch (scanner.nextInt()) {
+                case 1 -> add(); case 2 -> update(); case 3 -> remove();
+                case 4 -> search(); case 5 -> display(); case 6 -> { return; }
+                default -> System.out.println("Invalid choice");
+            }
+        }
+    }
+
+    private static void add() {
+        System.out.print("ID: "); int id = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Name: "); String name = scanner.nextLine();
+        System.out.print("Salary: "); double salary = scanner.nextDouble();
+        employees.add(new Employee(id, name, salary));
+    }
+
+    private static void update() {
+        System.out.print("ID to update: "); int id = scanner.nextInt(); scanner.nextLine();
+        employees.stream().filter(e -> e.id == id).findFirst().ifPresentOrElse(e -> {
+            System.out.print("New Name: "); e.name = scanner.nextLine();
+            System.out.print("New Salary: "); e.salary = scanner.nextDouble();
+        }, () -> System.out.println("Not found"));
+    }
+
+    private static void remove() {
+        System.out.print("ID to remove: "); int id = scanner.nextInt();
+        employees.removeIf(e -> e.id == id);
+    }
+
+    private static void search() {
+        System.out.print("ID to search: "); int id = scanner.nextInt();
+        employees.stream().filter(e -> e.id == id).findFirst()
+                .ifPresentOrElse(System.out::println, () -> System.out.println("Not found"));
+    }
+
+    private static void display() {
+        if (employees.isEmpty()) System.out.println("No employees");
+        else employees.forEach(System.out::println);
+    }
+}
